@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Diksha!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="birthday.css">
+    <script defer src="birtday.js"></script>
+    <style>
+        /* CSS styles are embedded here and will be extracted to the CSS section */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+        .no-scroll {
+            overflow: hidden !important;
+            height: 100vh !important;
+        }
+        /* Floating background shapes animation */
+        @keyframes bgFloat1 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        @keyframes bgFloat2 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+        @keyframes bgFloat3 {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        /* Animated gradient for timer popup */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .animated-bg-gradient {
+            background: linear-gradient(270deg, #FF6B6B, #FFD166, #4ECDC4, #FF85D5, #85C6FF, #FFED85);
+            background-size: 600% 600%;
+            animation: gradientAnimation 15s ease infinite;
+        }
+        .animate-fadeInUp {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 1s cubic-bezier(.23,1.02,.64,1);
+        }
+        .animate-fadeInLeft {
+            opacity: 0;
+            transform: translateX(40px);
+            transition: all 1s cubic-bezier(.23,1.02,.64,1);
+        }
+        .animate-fadeInUp.opacity-100, .animate-fadeInLeft.opacity-100 {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        .delay-1s { transition-delay: 0.3s; }
+        .delay-2s { transition-delay: 0.6s; }
+        .delay-3s { transition-delay: 0.9s; }
+        .delay-4s { transition-delay: 1.2s; }
+        .delay-5s { transition-delay: 1.5s; }
+        .delay-6s { transition-delay: 1.8s; }
+        .delay-7s { transition-delay: 2.1s; }
+        /* Wishes section sparkle animation */
+        .sparkle {
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Share Button -->
+    <button id="share-btn" aria-label="Share this page" style="position:fixed;bottom:100px;right:24px;z-index:3000;background:linear-gradient(135deg,#25D366,#FF6B6B);border:none;border-radius:50%;width:56px;height:56px;box-shadow:0 2px 12px rgba(0,0,0,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.2s;">
+        <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M18.984 17.016q1.031-1.266 1.523-2.859t.188-3.141q-.188-1.641-1.078-3.023t-2.344-2.344-3.023-1.078q-1.641-.188-3.141.188t-2.859 1.523l-2.016-2.016q-.188-.188-.445-.188t-.445.188q-.188.188-.188.445t.188.445l2.016 2.016q-1.266 1.031-1.523 2.859t-.188 3.141q.188 1.641 1.078 3.023t2.344 2.344 3.023 1.078q1.641.188 3.141-.188t2.859-1.523l2.016 2.016q.188.188.445.188t.445-.188q.188-.188.188-.445t-.188-.445zm-6.984-1.031q-1.031 0-1.758-.727t-.727-1.758.727-1.758 1.758-.727 1.758.727.727 1.758-.727 1.758-1.758.727z"/></svg>
+    </button>
+    <!-- Share Modal -->
+    <div id="share-modal" style="display:none;position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;">
+        <div style="background:white;border-radius:1.5rem;max-width:90vw;width:340px;padding:2rem 1.5rem;box-shadow:0 8px 32px rgba(0,0,0,0.18);text-align:center;position:relative;">
+            <button id="close-share-modal" aria-label="Close share modal" style="position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.5rem;color:#888;cursor:pointer;">&times;</button>
+            <div style="font-size:2.2rem;margin-bottom:0.5rem;">🔗</div>
+            <h3 style="font-size:1.3rem;font-weight:bold;margin-bottom:1rem;color:#d946ef;">Share this Birthday Page</h3>
+            <p style="font-size:1rem;margin-bottom:1.2rem;">Send a special birthday wish to Diksha on WhatsApp or Instagram!</p>
+            <button id="share-whatsapp" style="background:#25D366;color:white;font-weight:bold;padding:0.7rem 1.2rem;border-radius:2rem;margin:0.3rem 0;width:100%;display:flex;align-items:center;justify-content:center;gap:0.7rem;font-size:1.1rem;border:none;cursor:pointer;"><span style="font-size:1.3rem;">&#128241;</span> WhatsApp</button>
+            <button id="share-instagram" style="background:linear-gradient(45deg,#fd5,#f36,#c837ab,#515bd4);color:white;font-weight:bold;padding:0.7rem 1.2rem;border-radius:2rem;margin:0.3rem 0;width:100%;display:flex;align-items:center;justify-content:center;gap:0.7rem;font-size:1.1rem;border:none;cursor:pointer;"><span style="font-size:1.3rem;">&#128247;</span> Instagram Story</button>
+            <button id="share-copy" style="background:#f3e7e9;color:#d946ef;font-weight:bold;padding:0.7rem 1.2rem;border-radius:2rem;margin:0.3rem 0;width:100%;display:flex;align-items:center;justify-content:center;gap:0.7rem;font-size:1.1rem;border:none;cursor:pointer;"><span style="font-size:1.3rem;">&#128203;</span> Copy Link</button>
+        </div>
+    </div>
+    <!-- Background music toggle button -->
+    <button id="music-toggle" aria-label="Toggle background music" style="position:fixed;bottom:24px;right:24px;z-index:3000;background:rgba(255,255,255,0.85);border:none;border-radius:50%;width:56px;height:56px;box-shadow:0 2px 12px rgba(0,0,0,0.12);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.2s;">
+        <span id="music-icon" style="font-size:2rem;color:#d946ef;">&#127925;</span>
+    </button>
+
+    <!-- Timer Popup Overlay -->
+    <div id="timer-popup" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 transition-opacity duration-700 animated-bg-gradient" role="dialog" aria-modal="true" aria-label="Countdown Timer Overlay">
+        <!-- Sparkle overlay for magic effect -->
+        <div id="sparkle-overlay" style="position:absolute;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:2;"></div>
+        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <div class="floating-bg-shape bg-gradient-to-br from-pink-400 to-purple-500 opacity-30 w-96 h-96 rounded-full absolute top-[-10%] left-[-10%] animate-bgfloat1"></div>
+            <div class="floating-bg-shape bg-gradient-to-br from-yellow-300 to-pink-400 opacity-20 w-80 h-80 rounded-full absolute bottom-[-15%] right-[-10%] animate-bgfloat2"></div>
+            <div class="floating-bg-shape bg-gradient-to-br from-blue-400 to-cyan-300 opacity-20 w-72 h-72 rounded-full absolute top-[40%] right-[-8%] animate-bgfloat3"></div>
+        </div>
+        <div class="flex flex-col items-center justify-center z-10 relative">
+            <div class="relative w-28 h-28 xs:w-32 xs:h-32 sm:w-40 sm:h-40 mb-6 sm:mb-8">
+                <svg class="absolute top-0 left-0 w-full h-full" viewBox="0 0 160 160">
+                    <circle cx="80" cy="80" r="70" stroke="#fff" stroke-width="12" fill="none" opacity="0.2" />
+                    <circle id="timer-circle" cx="80" cy="80" r="70" stroke="#FF6B6B" stroke-width="12" fill="none" stroke-linecap="round" stroke-dasharray="439.6" stroke-dashoffset="0" style="transition: stroke-dashoffset 1s linear;" />
+                </svg>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span id="timer-number" class="text-4xl xs:text-5xl sm:text-6xl font-bold text-white animate-pulse" aria-live="polite" aria-atomic="true">10</span>
+                </div>
+            </div>
+            <div class="text-lg xs:text-xl sm:text-2xl text-white font-semibold animate__animated animate__fadeInDown text-center" aria-live="polite">Get Ready for the Surprise!</div>
+        </div>
+    </div>
+
+    <!-- Cake Animation Overlay -->
+    <div class="cake-container fade-in" id="cake-container" style="display:none;" role="dialog" aria-modal="true" aria-label="Birthday Cake Overlay">
+        <div class="absolute inset-0 overflow-hidden pointer-events-none z-0">
+            <div class="floating-bg-shape bg-gradient-to-br from-pink-400 to-purple-500 opacity-30 w-96 h-96 rounded-full absolute top-[-10%] left-[-10%] animate-bgfloat1"></div>
+            <div class="floating-bg-shape bg-gradient-to-br from-yellow-300 to-pink-400 opacity-20 w-80 h-80 rounded-full absolute bottom-[-15%] right-[-10%] animate-bgfloat2"></div>
+            <div class="floating-bg-shape bg-gradient-to-br from-blue-400 to-cyan-300 opacity-20 w-72 h-72 rounded-full absolute top-[40%] right-[-8%] animate-bgfloat3"></div>
+        </div>
+        <div class="cake cake-animation z-10 relative">
+            <div class="cake-text" id="cake-text" style="top: -200px; transition: all 1s cubic-bezier(0.4,0,0.2,1);" aria-live="polite">Happy Birthday Diksha!</div>
+            <div class="plate"></div>
+            <div class="cake-bottom"></div>
+            <div class="cake-middle"></div>
+            <div class="cake-top"></div>
+            <div class="candle"></div>
+            <div class="flame"></div>
+            <div class="cake-message" id="cake-message" aria-live="polite">Make a wish and blow the candle!</div>
+            <button class="cake-button" id="cake-button" style="bottom: -180px; transition: all 1s cubic-bezier(0.4,0,0.2,1);" tabindex="0" aria-label="Continue to Your Surprise">Continue to Your Surprise</button>
+        </div>
+    </div>
+    <div id="main-content" class="fade-in" style="display:none;">
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+
+        <!-- Sticky Navigation -->
+        <nav class="sticky-nav py-4 px-6" id="sticky-nav">
+            <div class="max-w-6xl mx-auto flex justify-between items-center">
+                <div class="text-2xl font-bold text-pink-600 cursive">Diksha's Birthday</div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#home" class="nav-link font-medium text-gray-800 hover:text-pink-600">Home</a>
+                    <a href="#message" class="nav-link font-medium text-gray-800 hover:text-pink-600">Message</a>
+                    <a href="#memories" class="nav-link font-medium text-gray-800 hover:text-pink-600">Memories</a>
+                    <a href="#gallery" class="nav-link font-medium text-gray-800 hover:text-pink-600">Gallery</a>
+                    <a href="#wishes" class="nav-link font-medium text-gray-800 hover:text-pink-600">Wishes</a>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section id="home" class="hero-section h-screen flex items-center justify-center relative overflow-hidden">
+            <div id="confetti-container" class="absolute inset-0 pointer-events-none"></div>
+            <div id="glitter-container" class="absolute inset-0 pointer-events-none"></div>
+            <div class="text-center px-4 z-10">
+                <div class="mb-4 opacity-0 translate-y-10 animate-fadeInUp delay-1s" id="hero-pre-title">
+                    <span class="inline-block py-2 px-6 bg-white bg-opacity-20 backdrop-filter backdrop-blur-sm rounded-full text-white text-lg font-medium">
+                        Today is a special day
+                    </span>
+                </div>
+                <h1 class="text-6xl md:text-8xl font-bold text-white mb-6 opacity-0 translate-y-10 animate-fadeInUp delay-2s" id="hero-title">
+                    Happy Birthday <span class="cursive text-pink-300 inline-block">Diksha!</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-white mb-10 opacity-0 max-w-2xl mx-auto animate-fadeInUp delay-3s" id="hero-subtitle">
+                    Celebrating another amazing year of your wonderful journey through life
+                </p>
+                <button id="celebrate-btn" class="btn-celebrate text-white font-bold py-4 px-10 rounded-full text-xl opacity-0 translate-y-10 animate-fadeInUp delay-4s">
+                    Let's Celebrate!
+                </button>
+                <div class="absolute bottom-10 left-0 right-0 text-center opacity-0 animate-fadeInUp delay-5s" id="scroll-indicator">
+                    <div class="scroll-down text-white">
+                        <svg class="w-10 h-10 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                        <span class="text-sm font-medium mt-2 block">Scroll Down</span>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute top-0 left-0 w-full h-full overflow-hidden z-0">
+                <div class="floating absolute top-10 left-[10%] text-7xl opacity-70">🎂</div>
+                <div class="floating absolute top-[20%] right-[15%] text-6xl opacity-70" style="animation-delay: 1s">🎁</div>
+                <div class="floating absolute bottom-[30%] left-[20%] text-5xl opacity-70" style="animation-delay: 2s">🎈</div>
+                <div class="floating absolute bottom-[20%] right-[10%] text-6xl opacity-70" style="animation-delay: 1.5s">🎉</div>
+                <div class="floating absolute top-[40%] left-[5%] text-5xl opacity-70" style="animation-delay: 0.5s">✨</div>
+                <div class="floating absolute top-[30%] right-[5%] text-7xl opacity-70" style="animation-delay: 2.5s">🎊</div>
+            </div>
+        </section>
+
+      <!-- Born On This Day Section (Enhanced) -->
+<section id="born-day" class="py-28 px-4 relative born-bg">
+    <div class="born-stars pointer-events-none select-none">
+        <div class="star star1"></div>
+        <div class="star star2"></div>
+        <div class="star star3"></div>
+        <div class="star star4"></div>
+        <div class="star star5"></div>
+    </div>
+    <div class="max-w-5xl mx-auto">
+        <div class="bg-white/40 backdrop-blur-2xl shadow-2xl rounded-3xl border border-white/30 px-6 md:px-12 py-14 flex flex-col md:flex-row items-center gap-12 born-glass-card animate-fadeInUp opacity-0 translate-y-10 relative overflow-hidden" id="born-section" style="box-shadow:0 8px 40px 0 rgba(255,107,107,0.10),0 1.5px 8px 0 rgba(255,107,107,0.08);">
+            <!-- Left: Info & Moon -->
+            <div class="flex-1 flex flex-col items-center md:items-start text-center md:text-left z-10">
+                <h2 class="text-5xl md:text-6xl font-extrabold mb-4 playfair text-pink-600 born-title-glow drop-shadow born-title-animate">Born On This Day</h2>
+                <div class="flex items-center justify-center md:justify-start gap-3 mb-2">
+                    <svg width="28" height="28" fill="none" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#FFD166"/><text x="12" y="17" text-anchor="middle" font-size="14" fill="#fff" font-family="monospace">🎂</text></svg>
+                    <span class="text-lg text-gray-700 font-semibold born-date-label">Date of Birth</span>
+                </div>
+                <div class="text-3xl md:text-4xl font-extrabold text-yellow-500 mb-6 born-date tracking-wide born-date-animate">21 July 2006</div>
+                <div class="flex flex-col items-center md:items-start mt-4 born-moon-block">
+                    <span class="text-lg text-gray-700 mb-2 font-semibold born-moon-label">Moon Phase That Night</span>
+                    <div class="born-moon-glow relative mb-2 born-moon-animate">
+                        <img src="moon.png" alt="Moon phase on 21 July 2006" class="w-36 h-36 rounded-full shadow-2xl border-4 border-pink-200 moon-animate born-moon-img" style="background: #222; box-shadow:0 0 32px 8px #ffd16666,0 2px 16px #ff6b6b22;" />
+                        <div class="born-moon-sparkle"></div>
+                        <div class="absolute -top-3 -right-3 animate-pulse">
+                            <span class="inline-block w-6 h-6 rounded-full bg-yellow-300/80 shadow-lg border-2 border-yellow-200"></span>
+                        </div>
+                    </div>
+                    <span class="text-xs text-gray-500 born-moon-caption">(Actual moon phase on your birthday!)</span>
+                </div>
+                <div class="mt-8 text-center md:text-left born-quote-block">
+                    <div class="flex items-center gap-2 justify-center md:justify-start born-quote-icon mb-1">
+                        <svg width="22" height="22" fill="none" viewBox="0 0 24 24"><path d="M7 17c-1.657 0-3-1.343-3-3 0-2.761 2.239-5 5-5V7c-4.418 0-8 3.582-8 8 0 2.761 2.239 5 5 5h1v-3H7zm10 0c-1.657 0-3-1.343-3-3 0-2.761 2.239-5 5-5V7c-4.418 0-8 3.582-8 8 0 2.761 2.239 5 5 5h1v-3h-1z" fill="#FF6B6B"/></svg>
+                        <span class="text-pink-600 font-semibold text-base born-quote">“The moon and stars aligned for your arrival.”</span>
+                    </div>
+                    <span class="text-xs text-gray-500">A magical night, a magical you!</span>
+                </div>
+            </div>
+            <!-- Divider -->
+            <div class="hidden md:block h-64 w-1 bg-gradient-to-b from-pink-200 via-yellow-100 to-pink-200 rounded-full mx-2 born-divider"></div>
+            <!-- Right: Childhood Photo -->
+            <div class="flex-1 flex flex-col items-center mt-8 md:mt-0 z-10">
+                <div class="relative group born-photo-frame born-photo-animate">
+                    <div class="absolute -top-4 -left-4 w-16 h-16 bg-pink-200/40 rounded-full blur-2xl born-photo-bg"></div>
+                    <img src="childhood.png" alt="Diksha Childhood Photo" class="w-64 h-80 object-cover rounded-3xl shadow-2xl border-4 border-yellow-200 childhood-photo-animate born-photo-shadow born-photo-img" style="box-shadow:0 0 32px 8px #ffd16644,0 2px 16px #ff6b6b22;" />
+                    <div class="absolute inset-0 rounded-3xl bg-gradient-to-t from-pink-400 via-transparent to-transparent opacity-0 group-hover:opacity-90 transition-opacity duration-700 flex items-end justify-center born-photo-overlay">
+                        <span class="text-white text-2xl font-extrabold mb-8 animate__animated animate__fadeInUp born-photo-caption">Cutieee!</span>
+                    </div>
+                    <div class="born-photo-sparkle"></div>
+                    <div class="absolute -bottom-4 -right-4 w-12 h-12 bg-yellow-200/60 rounded-full blur-xl born-photo-bg2"></div>
+                </div>
+                <div class="mt-4 text-center born-photo-caption2 text-pink-600 font-semibold text-lg">A bundle of joy from day one!</div>
+            </div>
+            <!-- Decorative floating shapes -->
+            <div class="absolute -top-10 -left-10 w-40 h-40 bg-pink-100/40 rounded-full blur-3xl born-bg-shape1"></div>
+            <div class="absolute -bottom-10 -right-10 w-32 h-32 bg-yellow-100/40 rounded-full blur-2xl born-bg-shape2"></div>
+        </div>
+        <!-- Decorative Divider -->
+        <div class="flex justify-center mt-10 mb-2 born-divider-curve">
+            <svg width="180" height="32" viewBox="0 0 180 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M10 22C40 2 140 2 170 22" stroke="#FFD166" stroke-width="4" stroke-linecap="round" fill="none"/>
+            </svg>
+        </div>
+    </div>
+</section>
+
+        <!-- Curved Divider -->
+        <div class="section-divider bg-white">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#f8f9fa" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,149.3C960,160,1056,160,1152,138.7C1248,117,1344,75,1392,53.3L1440,32L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+
+        <!-- Birthday Message -->
+<section id="message" class="py-24 px-4 bg-gradient-to-br from-pink-100 via-pink-200 to-yellow-100" style="background: linear-gradient(135deg, #ffe0f7 0%, #fffde4 100%);">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 playfair text-gray-800 opacity-0 translate-x-10 animate-fadeInLeft delay-1s" id="message-title">A Special Message</h2>
+                    <div class="w-24 h-1 bg-pink-500 mx-auto opacity-0 animate-fadeInLeft delay-2s" id="message-line"></div>
+                </div>
+                <div class="birthday-card p-10 md:p-16 opacity-0 translate-y-10 animate-fadeInUp delay-3s" id="birthday-card">
+                    <div class="ribbon">
+                        <span class="ribbon-content">Special</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-center mb-10 text-pink-600 cursive">Dear Diksha,</h2>
+                    <div class="space-y-6 text-gray-700 text-lg leading-relaxed">
+                        <p class="first-letter:text-5xl first-letter:font-bold first-letter:text-pink-600 first-letter:float-left first-letter:mr-2 first-letter:mt-1">
+                            On this special day, I wanted to take a moment to celebrate you and all the joy you bring to everyone around you. Your friendship has been one of the greatest gifts in my life, and I'm so grateful for every moment we've shared together.
+                        </p>
+                        <p>
+                            Your kindness, your laughter, and your incredible spirit make the world a brighter place. You have this amazing ability to light up any room you walk into and make everyone feel special. Your positive energy is truly contagious, and I'm so lucky to have you in my life.
+                        </p>
+                        <p>
+                            As you begin another trip around the sun, I hope this year brings you endless happiness, exciting adventures, and all the success you deserve. May all your dreams and wishes come true, and may you continue to shine your light on everyone around you.
+                        </p>
+                        <p>
+                            Thank you for being such an amazing friend. Here's to celebrating many more birthdays together and creating countless more beautiful memories!
+                        </p>
+                        <p class="text-xl font-semibold text-right mt-12">
+                            With love and best wishes,<br>
+                            <span class="cursive text-2xl text-pink-600">Your Friend </span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline Section -->
+<section class="py-24 px-4" style="background: linear-gradient(120deg, #f8fafc 0%, #ffe0f7 100%);">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 playfair text-gray-800 opacity-0 translate-x-10 animate-fadeInLeft delay-1s" id="timeline-title">Our Friendship Journey AND SOME IMPORTANT DAYS</h2>
+                    <div class="w-24 h-1 bg-pink-500 mx-auto opacity-0 animate-fadeInLeft delay-2s" id="timeline-line"></div>
+                    <p class="text-gray-600 mt-4 max-w-2xl mx-auto opacity-0 animate-fadeInUp delay-3s" id="timeline-subtitle">A look back at some of our most cherished moments together</p>
+                </div>
+                <div class="timeline-container mt-20">
+                    <div class="timeline-item opacity-0 animate-fadeInUp delay-4s" id="timeline-1">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <span class="text-sm font-medium text-pink-600 block mb-2">First Meeting</span>
+                            <h3 class="text-xl font-bold mb-3">When Our Paths Crossed {DATE 5th NOVEMBER 2024}</h3>
+                            <p class="text-gray-600">Remember when we first met? Who would have thought that moment would lead to such an amazing friendship. Some connections are just meant to be! </p>
+                            <div class="mt-4 text-5xl">👋</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item opacity-0 animate-fadeInUp delay-5s" id="timeline-2">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <span class="text-sm font-medium text-pink-600 block mb-2">MAKING PORTFOLIO</span>
+                            <h3 class="text-xl font-bold mb-3">Our First PROJECT Together {DATE 22nd MARCH 2025}</h3>
+                            <p class="text-gray-600">Our first project was the creation of a personal portfolio website, showcasing our skills, projects, and achievements. It marked the beginning of our journey into web development and creative design.</p>
+                            <div class="mt-4 text-5xl">🌐</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item opacity-0 animate-fadeInUp delay-6s" id="timeline-3">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <span class="text-sm font-medium text-pink-600 block mb-2">Celebration or CHAOS</span>
+                            <h3 class="text-xl font-bold mb-3">THE Day  after my Birthday{ DATE 15th APRIL 2025}</h3>
+                            <p class="text-gray-600"> I also know that you remember happen on this day, no need to remember that day but but but... on {25th APRIL 2025} we sorted the things </p>
+                            <div class="mt-4 text-5xl">🎂🫨</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item opacity-0 animate-fadeInUp delay-7s" id="timeline-4">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <span class="text-sm font-medium text-pink-600 block mb-2">Support</span>
+                            <h3 class="text-xl font-bold mb-3">Through Thick and Thin{EVERY DAY}</h3>
+                            <p class="text-gray-600">All those late-night talks and moments of support. True friendship isn't just about the fun times, but being there when it matters most.</p>
+                            <div class="mt-4 text-5xl">❤️</div>
+                        </div>
+                    </div>
+                     <div class="timeline-item opacity-0 animate-fadeInUp delay-8s" id="timeline-5">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <span class="text-sm font-medium text-pink-600 block mb-2">LAST DAY</span>
+                            <h3 class="text-xl font-bold mb-3">The last day of our 1st year{4th june 2025}</h3>
+                            <p class="text-gray-600">"So this is how one year ends? with cherish and fun talks.</p>
+                            <div class="mt-4 text-5xl">✌︎︎</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item opacity-0 animate-fadeInUp delay-9s" id="timeline-6">
+                        <div class="bg-white p-6 rounded-lg shadow-lg">
+                            <span class="text-sm font-medium text-pink-600 block mb-2">Today</span>
+                            <h3 class="text-xl font-bold mb-3"> Year of Awesomeness{ 21st JULY 2025}</h3>
+                            <p class="text-gray-600">And here we are, celebrating  year of your amazing journey. Looking forward to creating many more beautiful memories together!</p>
+                            <div class="mt-4 text-5xl">✨</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curved Divider -->
+        <div class="section-divider">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#f8f9fa" fill-opacity="1" d="M0,160L48,170.7C96,181,192,203,288,202.7C384,203,480,181,576,181.3C672,181,768,203,864,218.7C960,235,1056,245,1152,229.3C1248,213,1344,171,1392,149.3L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+
+        <!-- Photo Memories -->
+<section id="memories" class="py-24 px-4" style="background: linear-gradient(120deg, #e0f7fa 0%, #f8bbd0 100%);">
+            <div class="max-w-6xl mx-auto" style="position:relative;">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 playfair text-gray-800 opacity-0 transform translate-y-10" id="memories-title">Some Memories</h2>
+                    <div class="w-24 h-1 bg-pink-500 mx-auto opacity-0" id="memories-line"></div>
+                    <p class="text-gray-600 mt-4 max-w-2xl mx-auto opacity-0" id="memories-subtitle">A glimpse of the wonderful moments you've shared together</p>
+                </div>
+                <!-- Confetti Animation Container -->
+                <div id="confetti-container" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10;"></div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Memory 1 -->
+                    <div class="memory-card bg-white overflow-hidden shadow-lg opacity-0" id="memory-1">
+                        <div class="h-64 bg-pink-100 relative overflow-hidden">
+                            <div class="memory-image absolute inset-0 flex items-center justify-center bg-gradient-to-br from-pink-300 to-purple-400">
+                                <img src="1.jpg" alt="Smiling Together" class="object-cover w-full h-full" style="object-fit: cover;" />
+                            </div>
+                            <div class="memory-overlay absolute inset-0 flex items-center justify-center">
+                                <div class="text-center px-4">
+                                    <p class="text-white font-medium text-xl mb-2">Smiling Together</p>
+                                    <p class="text-white text-sm opacity-80">A candid moment of pure joy</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2 text-gray-800">Best Friends Forever</h3>
+                            <p class="text-gray-600">Our smiles say it all—this day was full of happiness and laughter!</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-sm text-pink-600 font-medium">One </span>
+                                <div class="heart text-2xl">❤️</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Memory 2 -->
+                    <div class="memory-card bg-white overflow-hidden shadow-lg opacity-0" id="memory-2">
+                        <div class="h-64 bg-blue-100 relative overflow-hidden">
+                            <div class="memory-image absolute inset-0 flex items-center justify-center bg-gradient-to-br from-blue-300 to-teal-400">
+                                <img src="2.jpg" alt="Fun at the Park" class="object-cover w-full h-full" style="object-fit: cover;" />
+                            </div>
+                            <div class="memory-overlay absolute inset-0 flex items-center justify-center">
+                                <div class="text-center px-4">
+                                    <p class="text-white font-medium text-xl mb-2">Fun at the CLUB(public helping) </p>
+                                    <p class="text-white text-sm opacity-80">Goofing around on a sunny day</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2 text-gray-800">Playful Vibes</h3>
+                            <p class="text-gray-600">We never miss a chance to be silly together. This was one of those days!</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-sm text-blue-600 font-medium">Two</span>
+                                <div class="heart text-2xl">❤️</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Memory 3 -->
+                    <div class="memory-card bg-white overflow-hidden shadow-lg opacity-0" id="memory-3">
+                        <div class="h-64 bg-yellow-100 relative overflow-hidden">
+                            <div class="memory-image absolute inset-0 flex items-center justify-center bg-gradient-to-br from-yellow-300 to-orange-400">
+                                <img src="3.jpg" alt="Travel Diaries" class="object-cover w-full h-full" style="object-fit: cover;" />
+                            </div>
+                            <div class="memory-overlay absolute inset-0 flex items-center justify-center">
+                                <div class="text-center px-4">
+                                    <p class="text-white font-medium text-xl mb-2">Travel Diaries</p>
+                                    <p class="text-white text-sm opacity-80">Exploring new places together</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2 text-gray-800">Adventure Time</h3>
+                            <p class="text-gray-600">Every trip with you is an adventure. This one was unforgettable!</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-sm text-yellow-600 font-medium">Three </span>
+                                <div class="heart text-2xl">❤️</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Memory 4 -->
+                    <div class="memory-card bg-white overflow-hidden shadow-lg opacity-0" id="memory-4">
+                        <div class="h-64 bg-green-100 relative overflow-hidden">
+                            <div class="memory-image absolute inset-0 flex items-center justify-center bg-gradient-to-br from-green-300 to-teal-400">
+                                <img src="4.jpg" alt="Celebration Time" class="object-cover w-full h-full" style="object-fit: cover;" />
+                            </div>
+                            <div class="memory-overlay absolute inset-0 flex items-center justify-center">
+                                <div class="text-center px-4">
+                                    <p class="text-white font-medium text-xl mb-2">Celebration Time</p>
+                                    <p class="text-white text-sm opacity-80">A special day to remember</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2 text-gray-800">Making Memories</h3>
+                            <p class="text-gray-600">We always find a reason to celebrate. This was one of our best!</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-sm text-green-600 font-medium">Four</span>
+                                <div class="heart text-2xl">❤️</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Memory 5 -->
+                    <div class="memory-card bg-white overflow-hidden shadow-lg opacity-0" id="memory-5">
+                        <div class="h-64 bg-purple-100 relative overflow-hidden">
+                            <div class="memory-image absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-300 to-indigo-400">
+                                <img src="5.jpg" alt="Photo Shoot" class="object-cover w-full h-full" style="object-fit: cover;" />
+                            </div>
+                            <div class="memory-overlay absolute inset-0 flex items-center justify-center">
+                                <div class="text-center px-4">
+                                    <p class="text-white font-medium text-xl mb-2">Photo Shoot</p>
+                                    <p class="text-white text-sm opacity-80">Capturing our best moments</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2 text-gray-800">Picture Perfect</h3>
+                            <p class="text-gray-600">We had so much fun posing for these photos. Every shot is a memory!</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-sm text-purple-600 font-medium">Five </span>
+                                <div class="heart text-2xl">❤️</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Memory 6 -->
+                    <div class="memory-card bg-white overflow-hidden shadow-lg opacity-0" id="memory-6">
+                        <div class="h-64 bg-red-100 relative overflow-hidden">
+                            <div class="memory-image absolute inset-0 flex items-center justify-center bg-gradient-to-br from-red-300 to-pink-400">
+                                <img src="6.jpg" alt="Baking Fun" class="object-cover w-full h-full" style="object-fit: cover;" />
+                            </div>
+                            <div class="memory-overlay absolute inset-0 flex items-center justify-center">
+                                <div class="text-center px-4">
+                                    <p class="text-white font-medium text-xl mb-2">Fun Together</p>
+                                    <p class="text-white text-sm opacity-80">Trying making new memories together</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-xl mb-2 text-gray-800">Sweet Memories</h3>
+                            <p class="text-gray-600">Our baking adventures are always a mess, but the results are delicious and the memories are even sweeter!</p>
+                            <div class="mt-4 flex justify-between items-center">
+                                <span class="text-sm text-red-600 font-medium">Six </span>
+                                <div class="heart text-2xl">❤️</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Photo Gallery -->
+<section id="gallery" class="py-24 px-4" style="background: linear-gradient(135deg, #f3e7e9 0%, #e3eeff 100%);">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 playfair text-gray-800 opacity-0 transform translate-y-10" id="gallery-title">Photo Gallery</h2>
+                    <div class="w-24 h-1 bg-pink-500 mx-auto opacity-0" id="gallery-line"></div>
+                    <p class="text-gray-600 mt-4 max-w-2xl mx-auto opacity-0" id="gallery-subtitle">Snapshots of our beautiful friendship</p>
+                </div>
+                
+                <div class="gallery-container opacity-0" id="gallery-container">
+                    <!-- Gallery Item 1 -->
+                    <div class="gallery-item">
+                        <div class="rounded-lg overflow-hidden shadow-lg">
+                            <img src="7.jpg" alt="Goofy Faces" class="w-full h-auto max-h-96 object-contain bg-white" style="background:#fff;" />
+                        </div>
+                    </div>
+                    <!-- Gallery Item 2 -->
+                    <div class="gallery-item">
+                        <div class="rounded-lg overflow-hidden shadow-lg">
+                            <img src="8.jpg" alt="Nature Walk" class="w-full h-auto max-h-96 object-contain bg-white" style="background:#fff;" />
+                        </div>
+                    </div>
+                    <!-- Gallery Item 3 -->
+                    <div class="gallery-item">
+                        <div class="rounded-lg overflow-hidden shadow-lg">
+                            <img src="9.jpg" alt="Birthday Bash" class="w-full h-auto max-h-96 object-contain bg-white" style="background:#fff;" />
+                        </div>
+                    </div>
+                    <!-- Gallery Item 4 -->
+                    <div class="gallery-item">
+                        <div class="rounded-lg overflow-hidden shadow-lg">
+                            <img src="10.jpg" alt="Cultural Day" class="w-full h-auto max-h-96 object-contain bg-white" style="background:#fff;" />
+                        </div>
+                    </div>
+                    <!-- Gallery Item 5 -->
+                    <div class="gallery-item">
+                        <div class="rounded-lg overflow-hidden shadow-lg">
+                            <img src="11.jpg" alt="Winter Fun" class="w-full h-auto max-h-96 object-contain bg-white" style="background:#fff;" />
+                        </div>
+                    </div>
+                    <!-- Gallery Item 6 -->
+                    <div class="gallery-item">
+                        <div class="rounded-lg overflow-hidden shadow-lg">
+                            <img src="12.jpg" alt="Festival Lights" class="w-full h-auto max-h-96 object-contain bg-white" style="background:#fff;" />
+                        </div>
+                    </div>
+                    <!-- Gallery Item 7 -->
+                    <div class="gallery-item">
+                        <div class="rounded-lg overflow-hidden shadow-lg">
+                            <img src="13.jpg" alt="Sunset Silhouette" class="w-full h-auto max-h-96 object-contain bg-white" style="background:#fff;" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Curved Divider -->
+        <div class="section-divider">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                <path fill="#FF6B6B" fill-opacity="1" d="M0,224L48,213.3C96,203,192,181,288,181.3C384,181,480,203,576,224C672,245,768,267,864,261.3C960,256,1056,224,1152,208C1248,192,1344,192,1392,192L1440,192L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+            </svg>
+        </div>
+
+        <!-- Birthday Wishes -->
+        <section id="wishes" class="py-24 px-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white relative overflow-hidden">
+            <div class="max-w-4xl mx-auto text-center relative z-10">
+                <h2 class="text-5xl font-bold mb-8 cursive opacity-0 translate-y-10 animate-fadeInUp delay-1s" id="wishes-title">Wishing You The Best Birthday Ever!</h2>
+                <div class="flex flex-wrap justify-center gap-6 mb-12 opacity-0 animate-fadeInUp delay-2s" id="wishes-icons">
+                    <div class="heart text-7xl floating sparkle">❤️</div>
+                    <div class="text-7xl floating sparkle" style="animation-delay: 0.5s">🎂</div>
+                    <div class="heart text-7xl floating sparkle" style="animation-delay: 1s">❤️</div>
+                </div>
+                <!-- Birthday wishes video clip -->
+                <div class="flex justify-center mb-10 opacity-0 animate-fadeInUp delay-2s" id="wishes-video-container">
+                    <video controls poster="test.mp4" class="rounded-3xl shadow-2xl border-4 border-white max-w-full w-[400px] bg-black">
+                        <source src="test.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <p class="text-2xl mb-12 max-w-2xl mx-auto opacity-0 animate-fadeInUp delay-3s" id="wishes-text">May your day be filled with joy, laughter, and unforgettable moments! Here's to another amazing year ahead!</p>
+                <button id="birthday-wish" class="bg-white text-pink-600 font-bold py-4 px-10 rounded-full text-xl hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg opacity-0 animate-fadeInUp delay-4s" id="wishes-button">
+                    Send Birthday Wishes
+                </button>
+                <!-- Sparkle overlay for wishes section -->
+                <div id="wishes-sparkle-overlay" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;"></div>
+            </div>
+            
+            <!-- Background Elements -->
+            <div class="absolute top-0 left-0 w-full h-full pointer-events-none">
+                <div class="rotating absolute top-10 left-[10%] w-20 h-20 opacity-20">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"></svg>
+                        <path fill="#FFFFFF" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.6,90,-16.3,88.5,-0.9C87,14.6,81.3,29.2,73.1,42.1C64.9,55,54.2,66.2,41.2,73.4C28.2,80.7,14.1,83,-0.2,84.1C-14.5,84.4,-28.9,81.8,-41.8,75.1C-54.6,68.3,-65.8,57.4,-74.2,44.3C-82.6,31.2,-88.1,15.6,-88.4,-0.1C-88.6,-15.9,-83.5,-31.7,-74.6,-44.9C-65.7,-58.1,-53,-68.7,-39.1,-76C-25.1,-83.3,-12.6,-87.4,1.2,-89.5C15,-91.6,30.1,-91.7,44.7,-84.5Z" transform="translate(100 100)" />
+                    </svg>
+                </div>
+                <div class="rotating absolute top-[30%] right-[15%] w-32 h-32 opacity-20" style="animation-delay: 2s; animation-direction: reverse;">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#FFFFFF" d="M47.7,-73.2C62.9,-66.7,77.1,-56.2,83.9,-42.1C90.8,-28,90.2,-10.3,86.5,5.4C82.8,21.2,76,34.9,66.7,46.7C57.4,58.4,45.6,68.1,32.1,74.3C18.5,80.4,3.2,83,-11.4,80.8C-26,78.6,-39.9,71.6,-51.5,62C-63.1,52.3,-72.5,40,-78.3,25.8C-84.1,11.6,-86.4,-4.5,-83.1,-19.8C-79.9,-35.1,-71.1,-49.5,-58.9,-57.5C-46.7,-65.4,-31.1,-66.8,-16.8,-73.1C-2.5,-79.4,10.5,-90.5,24.7,-88.8C38.9,-87.1,54.3,-72.5,64.4,-58.1Z" transform="translate(100 100)" />
+                    </svg>
+                </div>
+                <div class="rotating absolute bottom-[20%] left-[20%] w-24 h-24 opacity-20" style="animation-delay: 1s;">
+                    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#FFFFFF" d="M39.9,-65.7C54.3,-60.5,70.3,-54.3,79.9,-42.7C89.5,-31,92.8,-13.9,89.4,1.9C86,17.8,76,35.5,64.4,50.3C52.8,65,39.7,76.7,24.5,81.9C9.3,87.1,-8,85.8,-22.8,79.6C-37.6,73.4,-49.9,62.3,-59.7,49.5C-69.5,36.7,-76.8,22.2,-79.9,6.3C-83,-9.6,-81.9,-26.9,-74.4,-40.8C-66.9,-54.7,-53,-65.2,-38.5,-70.3C-24,-75.5,-9.5,-75.3,2.2,-78.9C13.8,-82.5,27.7,-89.9,39.9,-87.9Z" transform="translate(100 100)" />
+                    </svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-10 bg-gray-900 text-white text-center">
+            <div class="max-w-4xl mx-auto px-4">
+                <p class="text-lg mb-4">Made with <span class="text-pink-400">❤️</span> for Diksha's Birthday</p>
+                <p class="text-sm text-gray-400">Wishing you a day as special as you are!</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Add audio elements for sound effects -->
+    <audio id="chime-sound" src="chime.mp3" preload="auto"></audio>
+    <audio id="birthday-sound" src="birthday.mp3" preload="auto"></audio>
+    <audio id="burst-sound" src="burst.mp3" preload="auto"></audio>
+    <audio id="bg-music" src="birthday.mp3" preload="auto" loop></audio>
+        
+
+    <script>
+// Share button logic
+document.addEventListener('DOMContentLoaded', function() {
+    const shareBtn = document.getElementById('share-btn');
+    const shareModal = document.getElementById('share-modal');
+    const closeShareModal = document.getElementById('close-share-modal');
+    const shareWhatsapp = document.getElementById('share-whatsapp');
+    const shareInstagram = document.getElementById('share-instagram');
+    const shareCopy = document.getElementById('share-copy');
+    const shareMessage = encodeURIComponent("🎉 Happy Birthday Diksha! Check out this special birthday page made just for you: " + window.location.href);
+
+    shareBtn.addEventListener('click', function() {
+        shareModal.style.display = 'flex';
+    });
+    closeShareModal.addEventListener('click', function() {
+        shareModal.style.display = 'none';
+    });
+    shareModal.addEventListener('click', function(e) {
+        if (e.target === shareModal) shareModal.style.display = 'none';
+    });
+    shareWhatsapp.addEventListener('click', function() {
+        window.open('https://wa.me/?text=' + shareMessage, '_blank');
+    });
+    shareInstagram.addEventListener('click', function() {
+        alert('To share on Instagram Story, take a screenshot of this page and upload it to your story with the link: ' + window.location.href);
+    });
+    shareCopy.addEventListener('click', function() {
+        navigator.clipboard.writeText(window.location.href);
+        shareCopy.textContent = 'Copied!';
+        setTimeout(()=>{ shareCopy.textContent = '📋 Copy Link'; }, 1200);
+    });
+});
+
+
+// Background music toggle logic
+document.addEventListener('DOMContentLoaded', function() {
+    const musicBtn = document.getElementById('music-toggle');
+    const musicIcon = document.getElementById('music-icon');
+    const bgMusic = document.getElementById('bg-music');
+    let playing = false;
+    function toggleMusic() {
+        if (!playing) {
+            bgMusic.volume = 0.5;
+            bgMusic.play();
+            musicIcon.textContent = '\u23F8'; // Pause icon
+            playing = true;
+        } else {
+            bgMusic.pause();
+            musicIcon.textContent = '\uD83C\uDFB5'; // Music note
+            playing = false;
+        }
+    }
+    musicBtn.addEventListener('click', toggleMusic);
+    // Optional: auto-play on load (uncomment if desired)
+    // setTimeout(() => { toggleMusic(); }, 1200);
+});
+        // Timer Popup Logic
+        document.addEventListener('DOMContentLoaded', function () {
+            const popup = document.getElementById('timer-popup');
+            const timerNumber = document.getElementById('timer-number');
+            const timerCircle = document.getElementById('timer-circle');
+            const cakeContainer = document.getElementById('cake-container');
+            const mainContent = document.getElementById('main-content');
+            const chimeSound = document.getElementById('chime-sound');
+            const birthdaySound = document.getElementById('birthday-sound');
+            let timeLeft = 10;
+            const totalLength = 2 * Math.PI * 70; // Circumference
+            timerCircle.setAttribute('stroke-dasharray', totalLength);
+            timerCircle.setAttribute('stroke-dashoffset', 0);
+
+            // Disable scroll initially
+            document.body.classList.add('no-scroll');
+
+            function updateTimer() {
+                timerNumber.textContent = timeLeft;
+                const offset = totalLength * (1 - timeLeft / 10);
+                timerCircle.setAttribute('stroke-dashoffset', offset);
+            }
+
+            updateTimer();
+            const interval = setInterval(() => {
+                timeLeft--;
+                if (timeLeft >= 0) {
+                    updateTimer();
+                }
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    // Play chime sound when timer ends
+                    chimeSound.currentTime = 0;
+                    chimeSound.play();
+                    popup.classList.add('opacity-0');
+                    setTimeout(() => {
+                        popup.style.display = 'none';
+                        cakeContainer.style.display = '';
+                        cakeContainer.classList.remove('fade-in');
+                        void cakeContainer.offsetWidth; // force reflow
+                        cakeContainer.classList.add('fade-in');
+                        // Play birthday sound when cake appears
+                        birthdaySound.currentTime = 0;
+                        birthdaySound.play();
+                        // Confetti burst when cake appears
+                        confettiBurstOnCake();
+                    }, 700);
+                }
+            }, 1000);
+
+            // Listen for cake overlay close (button click or fade-out)
+            const observer = new MutationObserver(() => {
+                if (cakeContainer.style.display === 'none') {
+                    mainContent.style.display = '';
+                    mainContent.classList.remove('fade-in');
+                    void mainContent.offsetWidth; // force reflow
+                    mainContent.classList.add('fade-in');
+                    // Enable scroll when main content is shown
+                    document.body.classList.remove('no-scroll');
+                }
+            });
+            observer.observe(cakeContainer, { attributes: true, attributeFilter: ['style'] });
+
+            // Confetti burst function for cake overlay
+            function confettiBurstOnCake() {
+                // Prevent multiple bursts
+                if (document.getElementById('cake-confetti')) return;
+                // Play burst sound
+                const burstSound = document.getElementById('burst-sound');
+                if (burstSound) {
+                    burstSound.currentTime = 0;
+                    burstSound.play();
+                }
+                // Create a temporary confetti container over the cake
+                let cakeConfetti = document.createElement('div');
+                cakeConfetti.style.position = 'fixed';
+                cakeConfetti.style.left = 0;
+                cakeConfetti.style.top = 0;
+                cakeConfetti.style.width = '100vw';
+                cakeConfetti.style.height = '100vh';
+                cakeConfetti.style.pointerEvents = 'none';
+                cakeConfetti.style.zIndex = 2100;
+                cakeConfetti.id = 'cake-confetti';
+                document.body.appendChild(cakeConfetti);
+                // Confetti burst logic
+                const colors = ['#FF6B6B', '#FFD166', '#4ECDC4', '#FF85D5', '#85C6FF', '#FFED85'];
+                for (let i = 0; i < 80; i++) {
+                    const conf = document.createElement('div');
+                    conf.style.position = 'absolute';
+                    conf.style.width = Math.random() * 8 + 6 + 'px';
+                    conf.style.height = Math.random() * 16 + 8 + 'px';
+                    conf.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    conf.style.left = '50vw';
+                    conf.style.top = '50vh';
+                    conf.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+                    conf.style.opacity = 0.85;
+                    conf.style.transform = `translate(-50%, -50%) rotate(${Math.random()*360}deg)`;
+                    conf.style.transition = 'all 1.2s cubic-bezier(.23,1.02,.64,1)';
+                    cakeConfetti.appendChild(conf);
+                    setTimeout(() => {
+                        conf.style.left = (50 + (Math.random() - 0.5) * 80) + 'vw';
+                        conf.style.top = (50 + (Math.random() - 0.7) * 80) + 'vh';
+                        conf.style.opacity = 0;
+                        conf.style.transform += ` scale(${Math.random() * 1.2 + 0.7})`;
+                    }, 30);
+                }
+                setTimeout(() => {
+                    if (cakeConfetti.parentNode) cakeConfetti.parentNode.removeChild(cakeConfetti);
+                }, 1600);
+            }
+
+            // Also trigger confetti burst if cake overlay is shown by user action
+            cakeContainer.addEventListener('transitionend', function(e) {
+                if (cakeContainer.style.display !== 'none' && e.propertyName === 'opacity') {
+                    confettiBurstOnCake();
+                }
+            });
+        });
+    </script>
+<script>
+// Sparkle effect for wishes section
+document.addEventListener('DOMContentLoaded', function() {
+    function createSparkle(parent, color) {
+        const sparkle = document.createElement('div');
+        sparkle.style.position = 'absolute';
+        sparkle.style.width = (Math.random() * 8 + 6) + 'px';
+        sparkle.style.height = sparkle.style.width;
+        sparkle.style.borderRadius = '50%';
+        sparkle.style.background = color || 'rgba(255,255,255,0.8)';
+        sparkle.style.opacity = 0.7 + Math.random() * 0.3;
+        sparkle.style.left = (Math.random() * 100) + '%';
+        sparkle.style.top = (Math.random() * 100) + '%';
+        sparkle.style.pointerEvents = 'none';
+        sparkle.style.zIndex = 2;
+        sparkle.style.boxShadow = `0 0 12px 4px ${color || 'rgba(255,255,255,0.8)'}`;
+        sparkle.style.transition = 'opacity 1.2s, transform 1.2s';
+        parent.appendChild(sparkle);
+        setTimeout(() => {
+            sparkle.style.opacity = 0;
+            sparkle.style.transform = 'scale(1.7)';
+        }, 100);
+        setTimeout(() => {
+            if (sparkle.parentNode) sparkle.parentNode.removeChild(sparkle);
+        }, 1200);
+    }
+    const wishesSparkleOverlay = document.getElementById('wishes-sparkle-overlay');
+    if (wishesSparkleOverlay) {
+        setInterval(() => {
+            createSparkle(wishesSparkleOverlay, [
+                'rgba(255,255,255,0.9)',
+                'rgba(255,182,193,0.8)',
+                'rgba(186,85,211,0.8)',
+                'rgba(255,255,224,0.8)',
+                'rgba(255,255,255,0.7)'
+            ][Math.floor(Math.random()*5)]);
+        }, 350);
+    }
+});
+</script>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        document.querySelectorAll('.animate-fadeInUp').forEach((el, i) => {
+            el.classList.add('opacity-100');
+            el.classList.remove('opacity-0', 'translate-y-10');
+        });
+        document.querySelectorAll('.animate-fadeInLeft').forEach((el, i) => {
+            el.classList.add('opacity-100');
+            el.classList.remove('opacity-0', 'translate-x-10');
+        });
+    }, 800);
+});
+</script>
+</script>
+<!-- Cursor Trail Effect -->
+<script>
+// Animated cursor trail
+document.addEventListener('DOMContentLoaded', function() {
+    // Brighter, more vivid colors
+    const colors = [
+        '#FF0080', // Neon Pink
+        '#00FFD0', // Neon Aqua
+        '#FFFB00', // Neon Yellow
+        '#00FF47', // Neon Green
+        '#00A2FF', // Neon Blue
+        '#FF3D00', // Neon Orange
+        '#FF00E6', // Neon Magenta
+        '#FFF',    // Bright White
+        '#FFD700', // Gold
+        '#39FF14', // Electric Green
+        '#FF3131', // Bright Red
+        '#F5F5F5'  // Extra White
+    ];
+    const trailLength = 18;
+    const trail = [];
+    for (let i = 0; i < trailLength; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'cursor-trail-dot';
+        dot.style.position = 'fixed';
+        dot.style.pointerEvents = 'none';
+        dot.style.zIndex = 9999;
+        dot.style.width = dot.style.height = (18 - i * 0.7) + 'px';
+        dot.style.borderRadius = '50%';
+        dot.style.background = colors[i % colors.length];
+        dot.style.opacity = (0.95 - i * 0.045).toFixed(2); // Higher opacity for more pop
+        dot.style.transition = 'background 0.2s, opacity 0.2s';
+        document.body.appendChild(dot);
+        trail.push({el: dot, x: window.innerWidth/2, y: window.innerHeight/2});
+    }
+    let mouse = {x: window.innerWidth/2, y: window.innerHeight/2};
+    document.addEventListener('mousemove', function(e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+    function animateTrail() {
+        let x = mouse.x, y = mouse.y;
+        for (let i = 0; i < trail.length; i++) {
+            const dot = trail[i];
+            dot.x += (x - dot.x) * 0.25;
+            dot.y += (y - dot.y) * 0.25;
+            dot.el.style.left = (dot.x - dot.el.offsetWidth/2) + 'px';
+            dot.el.style.top = (dot.y - dot.el.offsetHeight/2) + 'px';
+            x = dot.x;
+            y = dot.y;
+        }
+        requestAnimationFrame(animateTrail);
+    }
+    animateTrail();
+    // Optional: fade out on touch devices
+    if ('ontouchstart' in window) {
+        trail.forEach(dot => dot.el.style.display = 'none');
+    }
+});
+// Cursor trail styles
+const style = document.createElement('style');
+style.textContent = `
+  .cursor-trail-dot {
+    box-shadow: 0 0 32px 8px rgba(255,255,255,0.35), 0 0 0 3px rgba(255,255,255,0.18);
+    mix-blend-mode: lighten;
+    will-change: transform, opacity;
+    transition: background 0.2s, opacity 0.2s;
+    pointer-events: none;
+    user-select: none;
+    filter: blur(0.2px);
+  }
+`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>
